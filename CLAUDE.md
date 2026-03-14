@@ -1,6 +1,91 @@
 # CLAUDE.md - 个人主页项目指南
 
-这是使用 Jekyll + al-folio 主题 + GitHub Pages 部署的个人主页项目。
+> **给新接手的 AI 助手**：这是使用 Jekyll + al-folio 主题 + GitHub Pages 部署的个人主页项目。请在开始任何工作前先阅读下面的"项目约定与踩坑经验"部分。
+
+---
+
+## ⚠️ 项目约定与踩坑经验（清空对话后必读）
+
+### 📁 文件组织约定
+
+```bash
+# ✅ 正确做法：在项目目录中创建临时文件
+temp/           # 用于临时草稿和工作文件
+drafts/         # 用于未发布的内容草稿
+assets/img/     # 图片资源
+assets/pdf/     # PDF 文件（如简历）
+
+# ❌ 错误做法：不要使用系统临时目录
+/tmp/           # 不要在 /tmp/ 中创建项目相关文件
+```
+
+**原因**：在 `/tmp/` 中创建的文件难以追踪，不便于后续参考和调试。所有项目相关文件都应该在项目目录中。
+
+### 🚀 部署流程的特殊注意事项
+
+1. **自动部署不工作**
+   - ⚠️ 问题：直接 `git push` 不会自动触发部署
+   - 原因：workflow scope 权限问题
+   - ✅ 解决：必须手动触发 GitHub Actions
+   ```bash
+   gh workflow run deploy.yml --repo Zhu-Luyu/Zhu-Luyu.github.io
+   ```
+
+2. **.nojekyll 文件是必需的**
+   - ⚠️ 问题：缺少 `.nojekyll` 会导致 GitHub Pages 无法正确服务网站
+   - ✅ 解决：确保项目根目录有 `.nojekyll` 文件
+   ```bash
+   touch .nojekyll
+   ```
+
+3. **GitHub Actions 权限配置**
+   - 访问：https://github.com/Zhu-Luyu/Zhu-Luyu.github.io/settings/actions
+   - 设置 "Workflow permissions" 为 "Read and write permissions"
+
+### 🔧 文件更新操作约定
+
+1. **推荐使用 GitHub CLI 直接更新文件**
+   ```bash
+   # 获取文件 SHA
+   sha=$(gh api repos/Zhu-Luyu/Zhu-Luyu.github.io/contents/_pages/about.md --jq '.sha')
+
+   # 更新文件
+   gh api repos/Zhu-Luyu/Zhu-Luyu.github.io/contents/_pages/about.md \
+     --method PUT \
+     --input - <<< "{\"message\":\"描述\",\"content\":\"$(base64 -i 文件路径)\",\"sha\":\"$sha\"}"
+   ```
+
+2. **或者使用标准 Git 流程**
+   ```bash
+   git add .
+   git commit -m "描述"
+   git push
+   gh workflow run deploy.yml --repo Zhu-Luyu/Zhu-Luyu.github.io
+   ```
+
+### 📝 内容文件约定
+
+1. **项目文件命名**：按重要性命名（如 `1_project.md`, `2_project.md`）
+2. **PDF 简历命名**：必须为 `cv_ZhuLuyu.pdf`
+3. **日期格式**：使用 `YYYY-MM-DD` 格式
+4. **Markdown 语法**：使用 Kramdown (GitHub Flavored Markdown)
+
+### 🐛 常见问题速查
+
+| 问题 | 解决方案 |
+|------|----------|
+| 网站显示 404 | 检查 GitHub Pages 状态，重新触发部署 |
+| 部署失败 | 检查 `.nojekyll` 文件存在，检查 Actions 权限 |
+| 修改后未更新 | 手动触发 workflow，清除浏览器缓存 |
+| 本地开发失败 | 检查 Docker 运行状态，或重新构建 |
+
+### 🎯 求职目标
+
+- **目标岗位**：AIGC / 大模型后端 / RAG / 具身智能
+- **内容策略**：突出扩散模型、LLM、RAG 系统经验
+- **技术栈重点**：PyTorch、FastAPI、Docker、全栈开发
+
+---
 
 ## 项目概述
 
@@ -50,63 +135,28 @@ bundle exec jekyll serve
 # 访问 http://localhost:4000
 ```
 
-### 更新内容并部署
+### 标准部署流程
 
-**重要说明**：
-- ⚠️ 直接 `git push` 不会自动部署，因为 workflow scope 权限问题
-- ✅ 必须通过 GitHub CLI 手动触发部署
-
-**部署流程**：
 ```bash
-# 1. 修改内容后提交到 GitHub
+# 1. 修改内容
+# 2. 提交到 GitHub
 git add .
 git commit -m "描述你的更改"
 git push
 
-# 2. 手动触发 GitHub Actions 部署
+# 3. 手动触发部署（重要！）
 gh workflow run deploy.yml --repo Zhu-Luyu/Zhu-Luyu.github.io
 
-# 3. 查看部署状态
+# 4. 查看部署状态
 gh run list --repo Zhu-Luyu/Zhu-Luyu.github.io --limit 1
 
-# 4. 等待 5-10 分钟后访问网站查看
+# 5. 等待 5-10 分钟后访问网站
 ```
 
-### 通过 GitHub CLI 直接更新文件
+## 内容更新模板
 
-```bash
-# 更新单个文件（如 about.md）
-gh api repos/Zhu-Luyu/Zhu-Luyu.github.io/contents/_pages/about.md \
-  --method PUT \
-  --input - <<< '{
-    "message": "更新描述",
-    "content": "'$(base64 -i 文件路径)'",
-    "sha": "'$(gh api repos/Zhu-Luyu/Zhu-Luyu.github.io/contents/_pages/about.md --jq '.sha')'"
-  }'
-```
+### 更新论文
 
-## 常见内容更新
-
-### 1. 更新个人信息
-
-编辑 `_config.yml`：
-```yaml
-title: Luyu Zhu
-first_name: Luyu
-last_name: Zhu
-email: lzhu911@connect.hkust-gz.edu.cn
-```
-
-编辑 `_data/socials.yml`：
-```yaml
-github_username: Zhu-Luyu
-linkedin_username: luyu-zhu-8076452b9
-email: lzhu911@connect.hkust-gz.edu.cn
-```
-
-### 2. 更新论文
-
-编辑 `_bibliography/papers.bib`，添加 BibTeX 条目：
 ```bibtex
 @inproceedings{zhu2025maid,
   abbr          = {ICASSP},
@@ -121,9 +171,9 @@ email: lzhu911@connect.hkust-gz.edu.cn
 }
 ```
 
-### 3. 添加新闻
+### 添加新闻
 
-在 `_news/` 目录创建新的 `.md` 文件：
+文件位置：`_news/文件名.md`
 ```markdown
 ---
 title: "新闻标题"
@@ -134,9 +184,9 @@ collection: news
 新闻内容...
 ```
 
-### 4. 添加项目
+### 添加项目
 
-在 `_projects/` 目录创建新的 `.md` 文件：
+文件位置：`_projects/数字_project.md`
 ```markdown
 ---
 title: "项目名称"
@@ -151,93 +201,17 @@ status: "状态"  # In Progress, Published, Completed 等
 项目描述...
 ```
 
-### 5. 更新简历 PDF
+### 更新简历 PDF
 
 ```bash
 # 复制新的 PDF 到 assets/pdf/
-cp 新简历.pdf /Users/torian/Base/Projects/MyPage/assets/pdf/cv_ZhuLuyu.pdf
+cp 新简历.pdf assets/pdf/cv_ZhuLuyu.pdf
 
 # 确认 _pages/cv.md 中的路径正确
 cv_pdf: /assets/pdf/cv_ZhuLuyu.pdf
 ```
 
-## 常见问题与解决方案
-
-### Q: 网站显示 404 错误
-
-**原因**：GitHub Pages 配置问题或部署失败
-
-**解决方案**：
-```bash
-# 检查 GitHub Pages 状态
-gh api repos/Zhu-Luyu/Zhu-Luyu.github.io/pages
-
-# 检查最新的构建状态
-gh run list --repo Zhu-Luyu/Zhu-Luyu.github.io --limit 3
-
-# 重新触发部署
-gh workflow run deploy.yml --repo Zhu-Luyu/Zhu-Luyu.github.io
-```
-
-### Q: GitHub Actions 部署失败
-
-**常见原因**：
-1. 缺少 `.nojekyll` 文件
-2. Workflow 权限配置问题
-3. 构建超时
-
-**解决方案**：
-```bash
-# 确保 .nojekyll 文件存在
-touch .nojekyll
-git add .nojekyll
-git commit -m "Add .nojekyll"
-git push
-
-# 检查 Actions 权限
-# 访问: https://github.com/Zhu-Luyu/Zhu-Luyu.github.io/settings/actions
-# 确保 "Workflow permissions" 设置为 "Read and write permissions"
-```
-
-### Q: 修改后网站没有更新
-
-**原因**：GitHub Pages 缓存或部署未触发
-
-**解决方案**：
-```bash
-# 1. 确认 GitHub Actions 已运行
-gh run list --repo Zhu-Luyu/Zhu-Luyu.github.io
-
-# 2. 如果没有运行，手动触发
-gh workflow run deploy.yml --repo Zhu-Luyu/Zhu-Luyu.github.io
-
-# 3. 清除浏览器缓存后刷新网站
-# Chrome: Cmd+Shift+R (硬刷新)
-```
-
-### Q: 本地开发环境启动失败
-
-**Docker 相关**：
-```bash
-# 确保 Docker 正在运行
-docker info
-
-# 重新构建
-docker compose down
-docker compose up --build
-```
-
-**Bundler 相关**：
-```bash
-# 更新 Ruby gems
-bundle update
-
-# 清理 Jekyll 缓存
-bundle exec jekyll clean
-bundle exec jekyll serve
-```
-
-## GitHub Actions 工作流
+## GitHub Actions 工作流详情
 
 ### 部署工作流程
 
@@ -271,33 +245,7 @@ gh run view --repo Zhu-Luyu/Zhu-Luyu.github.io --log
 gh run view RUN_ID --repo Zhu-Luyu/Zhu-Luyu.github.io --log
 ```
 
-## 内容组织建议
-
-### 针对求职优化（AIGC/大模型/RAG/具身智能）
-
-1. **个人简介**：
-   - 突出研究方向和项目经验
-   - 强调技术栈（PyTorch、扩散模型、LLM 等）
-   - 展示跨领域能力（研究 + 工程）
-
-2. **论文发表**：
-   - 将 `selected: true` 标记给重要论文
-   - 添加 code 和 pdf 链接
-   - 使用合适的会议缩写（ICASSP、NeurIPS、ICML 等）
-
-3. **项目展示**：
-   - 按重要性排序（最新的放前面）
-   - 每个项目包含：技术栈、角色、成果
-   - 突出与目标岗位相关的项目
-
-4. **新闻动态**：
-   - 保持 3-5 条最新动态
-   - 按时间倒序排列
-   - 突出重要里程碑（论文接收、新工作等）
-
-## 仓库维护
-
-### 定期检查清单
+## 定期维护检查清单
 
 - [ ] 确认 GitHub Actions 正常运行
 - [ ] 检查网站访问正常（https://zhu-luyu.github.io）
@@ -305,35 +253,6 @@ gh run view RUN_ID --repo Zhu-Luyu/Zhu-Luyu.github.io --log
 - [ ] 检查所有链接是否有效
 - [ ] 更新简历 PDF
 - [ ] 检查社交媒体链接
-
-### 备份与恢复
-
-```bash
-# 克隆完整仓库
-git clone https://github.com/Zhu-Luyu/Zhu-Luyu.github.io.git
-
-# 备份特定配置
-cp _config.yml _config.yml.backup
-cp _data/socials.yml _data/socials.yml.backup
-```
-
-## 相关资源
-
-- **al-folio 官方文档**: https://github.com/alshedivat/al-folio
-- **Jekyll 文档**: https://jekyllrb.com/docs/
-- **GitHub Pages 文档**: https://docs.github.com/en/pages
-- **BibTeX 指南**: https://www.overleaf.com/learn/8/How_to_use_BibTeX
-
-## 注意事项
-
-1. **环境隔离**：使用 Docker 开发，避免污染本地环境
-2. **版本控制**：所有内容通过 Git 管理，保留提交历史
-3. **自动部署**：Push 后手动触发 GitHub Actions
-4. **文件命名**：
-   - PDF 简历命名为 `cv_ZhuLuyu.pdf`
-   - 项目文件按重要性命名 `1_project.md`, `2_project.md` 等
-5. **图片资源**：放在 `assets/img/` 目录
-6. **Markdown 语法**：使用 Kramdown (GitHub Flavored Markdown)
 
 ## 快速命令参考
 
@@ -349,8 +268,18 @@ gh run view --repo Zhu-Luyu/Zhu-Luyu.github.io --log          # 查看日志
 
 # 文件操作
 git add . && git commit -m "描述" && git push                 # 提交更改
-gh api repos/.../contents/文件路径 --method PUT              # 直接更新文件
+
+# 检查状态
+gh api repos/Zhu-Luyu/Zhu-Luyu.github.io/pages               # 检查 Pages 状态
+curl -s -o /dev/null -w "HTTP: %{http_code}\n" https://zhu-luyu.github.io  # 检查网站
 ```
+
+## 相关资源
+
+- **al-folio 官方文档**: https://github.com/alshedivat/al-folio
+- **Jekyll 文档**: https://jekyllrb.com/docs/
+- **GitHub Pages 文档**: https://docs.github.com/en/pages
+- **BibTeX 指南**: https://www.overleaf.com/learn/8/How_to_use_BibTeX
 
 ---
 
