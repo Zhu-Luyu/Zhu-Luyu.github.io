@@ -1,8 +1,7 @@
 ---
-layout: post
-date: 2015-10-22 15:59:00-0400
-inline: true
-related_posts: false
+title: "Started MPhil at HKUSTgz"
+date: 2025-09-01
+collection: news
 ---
 
-A simple inline announcement.
+Excited to join the MPhil program in Artificial Intelligence at HKUSTgz, working on AIGC and Embodied AI!
