@@ -1,7 +1,3 @@
 ---
-layout: about
-title: About
-permalink: /
+redirect_to: /about/
 ---
-
-{% include about.liquid %}
