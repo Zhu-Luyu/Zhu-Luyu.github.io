@@ -440,39 +440,41 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the_godfather/";
-            },},{id: "news-a-simple-inline-announcement-with-markdown-emoji-sparkles-smile",
-          title: 'A simple inline announcement with Markdown emoji! :sparkles: :smile:',
-          description: "",
-          section: "News",},{id: "news-paper-accepted-at-icassp-2025",
+            },},{id: "news-paper-accepted-at-icassp-2025",
           title: 'Paper accepted at ICASSP 2025!',
           description: "",
           section: "News",handler: () => {
               window.location.href = "/news/announcement_2/";
+            },},{id: "news-research-intern-at-sangfor-technologies",
+          title: 'Research Intern at Sangfor Technologies',
+          description: "",
+          section: "News",handler: () => {
+              window.location.href = "/news/announcement_3/";
             },},{id: "news-started-mphil-at-hkustgz",
           title: 'Started MPhil at HKUSTgz',
           description: "",
           section: "News",handler: () => {
               window.location.href = "/news/announcement_1/";
-            },},{id: "projects-project-1",
-          title: 'project 1',
-          description: "with background image",
+            },},{id: "projects-maid-model-attribution-via-inverse-diffusion",
+          title: 'MAID: Model Attribution via Inverse Diffusion',
+          description: "",
           section: "Projects",handler: () => {
-              window.location.href = "/projects/1_project/";
-            },},{id: "projects-project-2",
-          title: 'project 2',
-          description: "a project with a background image and giscus comments",
+              window.location.href = "/project/maid";
+            },},{id: "projects-ai-audiovisual-generation-saas",
+          title: 'AI Audiovisual Generation SaaS',
+          description: "",
           section: "Projects",handler: () => {
-              window.location.href = "/projects/2_project/";
-            },},{id: "projects-project-3-with-very-long-name",
-          title: 'project 3 with very long name',
-          description: "a project that redirects to another website",
+              window.location.href = "/project/withsound-ai";
+            },},{id: "projects-enterprise-rag-system-optimization",
+          title: 'Enterprise RAG System Optimization',
+          description: "",
           section: "Projects",handler: () => {
-              window.location.href = "/projects/3_project/";
-            },},{id: "projects-project-4",
-          title: 'project 4',
-          description: "another without an image",
+              window.location.href = "/project/rag-optimization";
+            },},{id: "projects-world-model-based-data-synthesis-for-vln",
+          title: 'World Model-based Data Synthesis for VLN',
+          description: "",
           section: "Projects",handler: () => {
-              window.location.href = "/projects/4_project/";
+              window.location.href = "/project/vln-world-model";
             },},{id: "projects-project-5",
           title: 'project 5',
           description: "a project with a background image",
