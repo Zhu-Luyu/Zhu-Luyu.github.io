@@ -2,16 +2,15 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Motto. Etc.
+subtitle: MPhil Student in AI @ HKUSTgz | Research Interest: AIGC, LLM, RAG, Embodied AI
 
 profile:
   align: right
   image: prof_pic.jpg
   image_circular: false # crops the image to make it circular
   more_info: >
-    <p>555 your office number</p>
-    <p>123 your address street</p>
-    <p>Your City, State 12345</p>
+    <p>HKUSTgz, Guangzhou</p>
+    <p><a href="mailto:lzhu911@connect.hkust-gz.edu.cn">lzhu911@connect.hkust-gz.edu.cn</a></p>
 
 selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
@@ -19,16 +18,36 @@ social: true # includes social icons at the bottom of the page
 announcements:
   enabled: true # includes a list of news items
   scrollable: true # adds a vertical scroll bar if there are more than 3 news items
-  limit: 5 # leave blank to include all the news in the `_news` folder
+  limit: 3 # leave blank to include all the news in the `_news` folder
 
 latest_posts:
-  enabled: true
-  scrollable: true # adds a vertical scroll bar if there are more than 3 new posts items
-  limit: 3 # leave blank to include all the blog posts
+  enabled: false # disable blog posts for now
+  scrollable: true
+  limit: 3
 ---
 
-Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](https://www.reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
+I am an MPhil student in Artificial Intelligence at [HKUSTgz](https://hkust-gz.edu.cn/), supervised by Prof. [Jie Hao](https://cse.hkust.edu.hk/~jhoa/) and Prof. [Derui Wang](https://people.csiro.au/people/Deri-Wang/). Previously, I received my B.E. in Software Engineering from [BUPT](https://www.bupt.edu.cn/).
 
-Put your address / P.O. box / other info right below your picture. You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
+My research interests lie in **AIGC, Large Language Models, RAG systems, and Embodied AI**. I am particularly interested in developing efficient and robust systems for AI-generated content attribution and retrieval-augmented generation.
 
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+### Recent Work
+
+**MAID: Model Attribution via Inverse Diffusion** - Our work on AI-generated content attribution has been accepted by [ICASSP 2025](https://2025.ieeeicassp.org/). We developed a novel method using pretrained diffusion models as denoising autoencoders for feature extraction, achieving state-of-the-art performance on multiple benchmarks.
+
+**World Model-based Data Synthesis for VLN** - Currently exploring the adaptation of Genie Envisioner to Embodied Navigation tasks, aiming to solve data scarcity in navigation through generative world models.
+
+### Industry Experience
+
+- **Research Intern @ Sangfor Technologies**: Conducted pre-research on query understanding and routing for enterprise RAG systems
+- **Full-Stack Engineer @ Eing Technology**: Co-founded withsound.ai, an AI audiovisual generation SaaS platform
+- **Backend Developer @ Eing Technology**: Developed real-time AI music generation service for new-energy vehicles
+
+### Publications
+
+{{ site.publications }}
+
+### Projects & Awards
+
+- 🏆 National Second Prize in 17th National College Student Information Security Contest (Top 12%)
+- 🏆 Second Prize for Outstanding Achievement in NUS School of Computing (2/7)
+- 🏆 Third Prize & Most Popular Award in University Innovation Project (Top 1.5%)
