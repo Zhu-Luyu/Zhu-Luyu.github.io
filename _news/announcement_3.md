@@ -1,8 +1,7 @@
 ---
-layout: post
-date: 2016-01-15 07:59:00-0400
-inline: true
-related_posts: false
+title: "Research Intern at Sangfor Technologies"
+date: 2025-04-01
+collection: news
 ---
 
-A simple inline announcement with Markdown emoji! :sparkles: :smile:
+Started research internship at Sangfor Technologies, working on RAG systems and query understanding for enterprise knowledge retrieval.
